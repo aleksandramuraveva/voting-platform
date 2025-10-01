@@ -1,6 +1,7 @@
 import express from 'express';
 import cors, { CorsOptions } from 'cors';
 import config from './config/index';
+import ideasRouter from './routes/ideas.routes';
 
 import { initDatabase } from './database/init';
 
@@ -22,6 +23,8 @@ const corsOptions: CorsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+app.use('/api/ideas', ideasRouter);
 
 //DB
 initDatabase().catch(console.error);
