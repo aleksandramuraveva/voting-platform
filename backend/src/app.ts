@@ -1,18 +1,17 @@
 import express from 'express';
 import cors, { CorsOptions } from 'cors';
+import config from './config/index';
+
+import { initDatabase } from './database/init';
 
 const app = express();
-
-const whitelist = (process.env.WHITE_LIST || '')
-  .split(',')
-  .map((url) => url.trim());
 
 const corsOptions: CorsOptions = {
   origin: (
     origin: string | undefined,
     callback: (err: Error | null, allow?: boolean) => void,
   ) => {
-    if (!origin || whitelist.includes(origin)) {
+    if (!origin || config.app.whiteList.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -23,6 +22,9 @@ const corsOptions: CorsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+//DB
+initDatabase().catch(console.error);
 
 console.log('All good!');
 
