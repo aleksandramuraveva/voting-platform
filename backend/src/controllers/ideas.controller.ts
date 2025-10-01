@@ -1,16 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { getAllIdeasService } from '../services/ideas.service';
+import { asyncHandler } from '../utils/asyncHandler';
 
-export async function getAllIdeas(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-  try {
-    const ideas = await getAllIdeasService();
-    console.log("Ideas", ideas)
-    res.json(ideas);
-  } catch (err) {
-    next(err);
-  }
-}
+export const getAllIdeas = asyncHandler(async (req: Request, res: Response) => {
+  const ideas = await getAllIdeasService();
+  res.json(ideas);
+});
