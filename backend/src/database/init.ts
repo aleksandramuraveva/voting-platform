@@ -23,15 +23,24 @@ export const initDatabase = async () => {
     }
 
     // SEED
-    const seedQueries = seed
-      .split(';')
-      .map((query) => query.trim())
-      .filter((query) => query && !query.startsWith('--'));
+    //only if ideas table is empty
+    const [rows] = await db.execute('SELECT COUNT(*) as count FROM ideas');
+    if (Array.isArray(rows) && rows.length > 0 && 'count' in rows[0]) {
+      const count = Number(rows[0].count);
+      if (count === 0) {
+        const seedQueries = seed
+          .split(';')
+          .map((query) => query.trim())
+          .filter((query) => query && !query.startsWith('--'));
 
-    for (const query of seedQueries) {
-      await db.execute(query);
+        for (const query of seedQueries) {
+          await db.execute(query);
+        }
+        console.log('✅ Seed data inserted');
+      } else {
+        console.log('✅ Database already seeded, skipping...');
+      }
     }
-
     console.log('✅ Database initialized successfully');
   } catch (error) {
     console.error('❌ Database initialization failed:', error);
