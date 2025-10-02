@@ -69,3 +69,9 @@
   font-size: 12px;
   color: #d1d1d1;
 }
+
+@media (max-width: 768px) {
+.intro-counter {
+  flex-direction: column;
+}
+}
