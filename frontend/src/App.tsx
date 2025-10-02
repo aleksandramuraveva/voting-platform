@@ -1,12 +1,47 @@
+import {useState, useEffect} from 'react';
 import './App.css';
 // import type { } from "./types";
-import VoteButton from './components/VoteButton/VoteButton';
-import Card from './components/Card/Card';
+// import VoteButton from './components/VoteButton/VoteButton';
+// import Card from './components/Card/Card';
+// import Loader from './components/Loader/Loader';
+import List from './components/List/List';
+import IntroCounter from './components/IntroCounter/IntroCounter'
+import { getIdeas } from "./services/api";
 
 function App() {
-  const handleStarToggle = (isActive) => {
-    console.log(`Star is ${isActive ? 'active' : 'inactive'}`);
-  };
+  const [ideas, setIdeas] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const MAX_VOTES = 10;
+
+  const votesUsed = ideas.reduce((acc, it) => (it.voted ? acc + 1 : acc), 0);
+
+  useEffect(() => {
+    async function fetchIdeas() {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await getIdeas();
+        setIdeas(data);
+        console.log('ideas', data)
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchIdeas();
+  }, []);
+
+
+  const handleVote = (id: string) => {
+  setIdeas(prev =>
+    prev.map(it =>
+      it.id === id ? { ...it, voted: true } : it
+    )
+  );
+};
   return (
     <div className="app">
       {/* BG */}
@@ -16,79 +51,21 @@ function App() {
 
       {/* MAIN */}
       <div className="content">
-        <header className="header">
-          <h1>Voting Platform</h1>
-        </header>
+      
 
         <main className="main-content">
-          {/* List*/}
-          <div className="ideas-list">
-            <Card
-              title="Название идеи"
-              description="Описание идеи здесь здесь здесь здесь там"
-              votesCount={5}
-              voted={0}
-            >
-              <VoteButton
-                text="Проголосовать"
-                initialActive={false}
-                onToggle={handleStarToggle}
-                disabled={true}
-              />
-            </Card>
-            <Card
-              title="Название идеи"
-              description="Описание идеи здесь здесь здесь здесь там"
-              votesCount={5}
-              voted={0}
-            >
-              <VoteButton
-                text="Проголосовать"
-                initialActive={false}
-                onToggle={handleStarToggle}
-                disabled={true}
-              />
-            </Card>
-            <Card
-              title="Название идеи"
-              description="Описание идеи здесь здесь здесь здесь там"
-              votesCount={5}
-              voted={0}
-            >
-              <VoteButton
-                text="Проголосовать"
-                initialActive={false}
-                onToggle={handleStarToggle}
-                disabled={true}
-              />
-            </Card>
-            <Card
-              title="Название идеи"
-              description="Описание идеи здесь здесь здесь здесь там"
-              votesCount={5}
-              voted={0}
-            >
-              <VoteButton
-                text="Проголосовать"
-                initialActive={false}
-                onToggle={handleStarToggle}
-                disabled={true}
-              />
-            </Card>
-            <Card
-              title="Название идеи"
-              description="Описание идеи здесь здесь здесь здесь там"
-              votesCount={5}
-              voted={0}
-            >
-              <VoteButton
-                text="Проголосовать"
-                initialActive={false}
-                onToggle={handleStarToggle}
-                disabled={true}
-              />
-            </Card>
-          </div>
+         <header className="header">
+          <h1>Voting Platform</h1>
+        </header>
+         <IntroCounter votesUsed={votesUsed} maxVotes={MAX_VOTES} />
+              <List 
+            ideas={ideas}
+            loading={loading}
+            error={error}
+            onVote={handleVote}
+  votesUsed={votesUsed}
+            maxVotes={MAX_VOTES}
+          />
         </main>
       </div>
     </div>

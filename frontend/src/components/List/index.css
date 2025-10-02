@@ -1,0 +1,23 @@
+.ideas-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+.ideas-list .card {
+  flex: 0 1 400px;
+}
+
+.error-message {
+  color: #ff6b6b;
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 8px;
+  margin: 2rem auto;
+  max-width: 500px;
+}
