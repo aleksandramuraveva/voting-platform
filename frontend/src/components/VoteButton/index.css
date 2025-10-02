@@ -1,0 +1,95 @@
+.vote-button {
+  --d: 2rem;
+  --t: 0.3s;
+  --c: #fcfcfc #d2d2e6;
+  --o: 0.125rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 6rem;
+  min-width: fit-content;
+  width: auto;
+  gap: 0.75em;
+  padding: 0.75em 1.5em;
+  border: none;
+  border-radius: 15%;
+  background: #e8e8e8;
+  font-size: 1em;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--t) ease;
+  position: relative;
+  transform: scale(calc(1 - var(--press, 0) * 0.02));
+
+  /* Neumorphic shadow effect */
+  box-shadow:
+    calc(var(--not-press, 1) * calc(-1 * var(--o)))
+      calc(var(--not-press, 1) * calc(-1 * var(--o))) var(--o)
+      rgba(252, 252, 252, var(--not-press, 1)),
+    calc(var(--not-press, 1) * var(--o)) calc(var(--not-press, 1) * var(--o))
+      var(--o) rgba(210, 218, 230, var(--not-press, 1)),
+    inset calc(var(--press, 0) * var(--o)) calc(var(--press, 0) * var(--o))
+      var(--o) rgba(210, 218, 230, var(--press, 0)),
+    inset calc(var(--press, 0) * calc(-1 * var(--o)))
+      calc(var(--press, 0) * calc(-1 * var(--o))) var(--o)
+      rgba(252, 252, 252, var(--press, 0));
+}
+
+.vote-button:hover:not(.disabled) {
+  --light: 1;
+}
+
+.vote-button:active:not(.disabled) {
+  --press: 1;
+}
+
+.vote-button:focus:not(.disabled) {
+  outline: none;
+}
+
+.vote-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: scale(1);
+}
+
+.vote-button.disabled .button-text {
+  color: #666;
+}
+
+.vote-button.disabled .star-icon {
+  filter: Contrast(0) Sepia(0) Hue-Rotate(0deg) Saturate(0) Opacity(0.4)
+    Drop-Shadow(1px 1px hsla(0, 0%, 100%, 1));
+}
+
+.button-text {
+  color: #333;
+  font-weight: 600;
+  transition: color var(--t);
+  white-space: nowrap;
+}
+
+.star-icon {
+  font-size: 1.5em;
+  color: #ffcc00;
+  opacity: 0.3;
+  transition:
+    opacity var(--t),
+    color var(--t);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+.vote-button.active .star-icon {
+  color: #feff3d;
+  opacity: 1;
+}
+
+.vote-button.active {
+  --light: 1;
+}

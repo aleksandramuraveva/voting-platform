@@ -1,1 +1,16 @@
 /* add reset files */
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #fff; /*fallback*/
+}
+#root {
+  min-height: 100vh;
+}
