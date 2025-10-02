@@ -21,16 +21,21 @@ export const voteForIdea = asyncHandler(async (req: Request, res: Response) => {
 
   try {
     const updatedVotesCount = await voteForIdeaService(ideaId, clientIp);
-    res.status(200).json({ votesCount: updatedVotesCount });
-  } catch (err: unknown) {
-    if (err.message === 'already_voted')
-      return res
-        .status(409)
-        .json({ error: 'Вы уже проголосовали за эту идею!' });
-    if (err.message === 'limit_exceeded')
-      return res
-        .status(409)
-        .json({ error: 'Вы исчерпали свой лимит голосов!' });
+    return res.status(200).json({ votesCount: updatedVotesCount });
+  } catch (err) {
+    const error = err as Error;
+
+    if (error.message === 'already_voted') {
+      return res.status(409).json({ error: 'Вы уже проголосовали за эту идею!' });
+    }
+    if (error.message === 'limit_exceeded') {
+      return res.status(409).json({ error: 'Вы исчерпали свой лимит голосов!' });
+    }
+    if (error.message === 'rate_limited') {
+      return res.status(429).json({ error: 'Слишком много запросов, попробуйте позже!' });
+    }
+
     throw err;
   }
 });
+
