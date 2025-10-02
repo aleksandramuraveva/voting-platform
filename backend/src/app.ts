@@ -1,6 +1,8 @@
 import express from 'express';
 import cors, { CorsOptions } from 'cors';
 import config from './config/index';
+import ideasRouter from './routes/ideas.routes';
+import { errorHandler } from './middlewares/errorHandler';
 
 import { initDatabase } from './database/init';
 
@@ -23,8 +25,15 @@ const corsOptions: CorsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.use('/api/ideas', ideasRouter);
+
+app.use(errorHandler);
+
 //DB
-initDatabase().catch(console.error);
+initDatabase().catch((err) => {
+  console.error('❌ DB init failed:', err);
+  process.exit(1);
+});
 
 console.log('All good!');
 
