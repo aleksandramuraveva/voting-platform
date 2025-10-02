@@ -37,7 +37,7 @@ https://github.com/user-attachments/assets/195896c4-6218-403a-9371-e61c1a596435
 ### Инфраструктура  
 - Конфигурация через .env файлы
 - Полная TypeScript поддержка
-= Использовались Prettier, Lint
+- Использовались Prettier, Lint
 
 ## Структура проекта
 
