@@ -5,7 +5,7 @@
   justify-content: space-between;
   padding: 16px;
   border-radius: 10px;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   margin: 16px auto;
   max-width: 840px;
 }
@@ -49,7 +49,7 @@
 .counter-bar {
   width: 160px;
   height: 10px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   margin-top: 8px;
   overflow: hidden;
@@ -61,11 +61,17 @@
   transition: width 300ms ease;
 }
 .counter-bar.full .counter-fill {
-  box-shadow: 0 0 6px rgba(255,106,0,0.6);
+  box-shadow: 0 0 6px rgba(255, 106, 0, 0.6);
 }
 
 .counter-note {
   margin-top: 8px;
   font-size: 12px;
   color: #d1d1d1;
+}
+
+@media (max-width: 768px) {
+  .intro-counter {
+    flex-direction: column;
+  }
 }
