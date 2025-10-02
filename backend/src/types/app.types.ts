@@ -18,4 +18,9 @@ export interface IdeaDbRow extends RowDataPacket {
   description: string | null;
   created_at: Date;
   voted: number; // 0 or 1
+  votesCount: number;
+}
+
+export interface IdeaWithVoteAndCount extends IdeaWithVote {
+  votesCount: number;
 }
