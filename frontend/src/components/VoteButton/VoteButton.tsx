@@ -6,33 +6,32 @@ const VoteButton = ({
   activeText = 'Голос засчитан',
   initialActive = false,
   disabled = false,
-  onToggle,
+  onVote,
 }) => {
   const [isActive, setIsActive] = useState(initialActive);
+  const [isLocked, setIsLocked] = useState(initialActive);
 
   const handleClick = () => {
-    if (disabled) return;
+    if (disabled || isLocked) return;
 
-    const newActiveState = !isActive;
-    setIsActive(newActiveState);
+    setIsActive(true);
+    setIsLocked(true);
 
-    if (onToggle) {
-      onToggle(newActiveState);
+    if (onVote) {
+      onVote(); // notify parent
     }
   };
 
   return (
     <button
-      className={`vote-button ${isActive ? 'active' : ''} ${disabled ? 'disabled' : ''}`}
+      className={`vote-button ${isActive ? 'active' : ''} ${disabled || isLocked ? 'disabled' : ''}`}
       onClick={handleClick}
       aria-label={isActive ? activeText : text}
-      disabled={disabled}
+      disabled={disabled || isLocked}
       style={{ '--hue': '48deg' }}
     >
       <span className="button-text">{isActive ? activeText : text}</span>
-      <span className="star-icon" aria-hidden="true">
-        ⭐
-      </span>
+      <span className="star-icon" aria-hidden="true">⭐</span>
     </button>
   );
 };

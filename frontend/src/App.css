@@ -122,7 +122,7 @@
 
 .header h1 {
   color: white;
-  font-size: 4rem;
+  font-size: 3rem;
   text-align: center;
   text-shadow:
     -1px -1px 0 #000,
@@ -134,13 +134,11 @@
 }
 
 .main-content {
-  margin-top: 2rem;
-  max-height: calc(100vh - 200px);
+  /*margin-top: 4rem;*/
+  max-height: calc(100vh - 50px);
   overflow-y: auto;
-}
-
-.ideas-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/*  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;*/
 }
