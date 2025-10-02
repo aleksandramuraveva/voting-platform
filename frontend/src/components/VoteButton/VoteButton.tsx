@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './index.css';
 
 const VoteButton = ({
@@ -18,20 +18,29 @@ const VoteButton = ({
     setIsLocked(true);
 
     if (onVote) {
-      onVote(); // notify parent
+      onVote();
     }
   };
 
+  // Determine the visual state
+  const showActiveStar = isActive; // Star shines if user voted for this idea
+  const isButtonDisabled = disabled || isLocked; // Button is disabled if limit reached OR already voted
+
   return (
     <button
-      className={`vote-button ${isActive ? 'active' : ''} ${disabled || isLocked ? 'disabled' : ''}`}
+      className={`vote-button ${showActiveStar ? 'active' : ''} ${isButtonDisabled ? 'disabled' : ''}`}
       onClick={handleClick}
-      aria-label={isActive ? activeText : text}
-      disabled={disabled || isLocked}
+      aria-label={showActiveStar ? activeText : text}
+      disabled={isButtonDisabled}
       style={{ '--hue': '48deg' }}
     >
-      <span className="button-text">{isActive ? activeText : text}</span>
-      <span className="star-icon" aria-hidden="true">⭐</span>
+      <span className="button-text">{showActiveStar ? activeText : text}</span>
+      <span
+        className={`star-icon ${showActiveStar ? 'active' : ''}`}
+        aria-hidden="true"
+      >
+        ⭐
+      </span>
     </button>
   );
 };

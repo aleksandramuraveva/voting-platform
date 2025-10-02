@@ -1,13 +1,6 @@
 import './index.css';
 
-const Card = ({
-  title,
-  description,
-  votesCount,
-  voted,
-  // onVote
-  children,
-}) => {
+const Card = ({ title, description, votesCount, voted, children }) => {
   return (
     <div className={`card ${voted ? 'card-voted' : ''}`}>
       <div className="card-content">

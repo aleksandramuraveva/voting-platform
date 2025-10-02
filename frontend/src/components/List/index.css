@@ -1,23 +1,27 @@
 .ideas-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 1.5rem;
-  justify-content: center;
   width: 100%;
   margin: 0 auto;
   padding-top: 2rem;
-}
-.ideas-list .card {
-  flex: 0 1 400px;
+  align-items: stretch;
 }
 
-.error-message {
-  color: #ff6b6b;
-  text-align: center;
-  padding: 2rem;
-  font-size: 1.1rem;
-  background: rgba(255, 107, 107, 0.1);
-  border-radius: 8px;
-  margin: 2rem auto;
-  max-width: 500px;
+.ideas-list .card {
+  height: 100%;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .ideas-list {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .ideas-list .card {
+    min-height: 200px;
+  }
 }

@@ -1,4 +1,4 @@
-import "./index.css";
+import './index.css';
 
 type Props = {
   votesUsed: number;
@@ -6,7 +6,11 @@ type Props = {
   description?: string;
 };
 
-const IntroCounter: React.FC<Props> = ({ votesUsed, maxVotes, description }) => {
+const IntroCounter: React.FC<Props> = ({
+  votesUsed,
+  maxVotes,
+  description,
+}) => {
   const progress = Math.min(Math.max(votesUsed, 0), maxVotes);
   const isLimitReached = progress >= maxVotes;
 
@@ -16,7 +20,7 @@ const IntroCounter: React.FC<Props> = ({ votesUsed, maxVotes, description }) => 
         <h2 id="intro-title">Поддержи идеи — голосуй за лучшие</h2>
         <p className="intro-desc">
           {description ||
-            "Просмотрите список идей ниже и проголосуйте за те, которые считаете наиболее полезными. С одного IP-адреса можно отдать до 10 голосов."}
+            'Просмотрите список идей ниже и проголосуйте за те, которые считаете наиболее полезными. С одного IP-адреса можно отдать до 10 голосов.'}
         </p>
       </div>
 
@@ -27,7 +31,7 @@ const IntroCounter: React.FC<Props> = ({ votesUsed, maxVotes, description }) => 
           <span className="counter-max">{maxVotes}</span>
         </div>
         <div
-          className={`counter-bar ${isLimitReached ? "full" : ""}`}
+          className={`counter-bar ${isLimitReached ? 'full' : ''}`}
           aria-hidden="true"
         >
           <div
@@ -36,7 +40,9 @@ const IntroCounter: React.FC<Props> = ({ votesUsed, maxVotes, description }) => 
           />
         </div>
         <div className="counter-note">
-          {isLimitReached ? "Лимит голосов достигнут" : "Еще можно проголосовать"}
+          {isLimitReached
+            ? 'Лимит голосов достигнут'
+            : 'Еще можно проголосовать'}
         </div>
       </div>
     </section>

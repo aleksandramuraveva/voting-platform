@@ -22,7 +22,6 @@
   position: relative;
   transform: scale(calc(1 - var(--press, 0) * 0.02));
 
-  /* Neumorphic shadow effect */
   box-shadow:
     calc(var(--not-press, 1) * calc(-1 * var(--o)))
       calc(var(--not-press, 1) * calc(-1 * var(--o))) var(--o)
@@ -50,24 +49,12 @@
 
 .vote-button.disabled {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.7;
   transform: scale(1);
 }
 
-.vote-button.disabled .button-text {
+.vote-button.disabled:not(.active) .button-text {
   color: #666;
-}
-
-.vote-button.disabled .star-icon {
-  filter: Contrast(0) Sepia(0) Hue-Rotate(0deg) Saturate(0) Opacity(0.4)
-    Drop-Shadow(1px 1px hsla(0, 0%, 100%, 1));
-}
-
-.button-text {
-  color: #333;
-  font-weight: 600;
-  transition: color var(--t);
-  white-space: nowrap;
 }
 
 .star-icon {
@@ -85,9 +72,25 @@
   flex-shrink: 0;
 }
 
-.vote-button.active .star-icon {
+.star-icon.active {
   color: #feff3d;
   opacity: 1;
+  /*filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));*/
+}
+
+.button-text {
+  color: #333;
+  font-weight: 600;
+  transition: color var(--t);
+  white-space: nowrap;
+}
+
+.vote-button.active.disabled .button-text {
+  color: #333;
+}
+
+.vote-button.disabled:not(.active) .button-text {
+  color: #666;
 }
 
 .vote-button.active {
