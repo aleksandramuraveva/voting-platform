@@ -1,4 +1,4 @@
-import { RowDataPacket, OkPacket } from 'mysql2';
+import { RowDataPacket } from 'mysql2';
 import { PoolConnection } from 'mysql2/promise';
 import config from '../config/index';
 
@@ -8,17 +8,21 @@ export async function getOrCreateIpCounter(
   connection: PoolConnection,
   ip: string,
 ): Promise<number> {
+  //solve gap lock, raw should exist before locking
+  await connection.query(
+    'INSERT IGNORE INTO ip_counters (voter_ip, votes_count) VALUES (INET6_ATON(?), 0)',
+    [ip],
+  );
+
   const [rows] = await connection.query<RowDataPacket[]>(
     'SELECT votes_count FROM ip_counters WHERE voter_ip = INET6_ATON(?) FOR UPDATE',
     [ip],
   );
 
   if (rows.length === 0) {
-    await connection.query<OkPacket>(
-      'INSERT INTO ip_counters (voter_ip, votes_count) VALUES (INET6_ATON(?), 0)',
-      [ip],
+    throw new Error(
+      `Critical: ip_counters row missing for IP ${ip} after INSERT IGNORE`,
     );
-    return 0;
   }
 
   return rows[0].votes_count;
