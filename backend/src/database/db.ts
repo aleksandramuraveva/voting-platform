@@ -11,3 +11,7 @@ export const db = mysql.createPool({
   connectionLimit: config.db.poolLimit,
   queueLimit: 0,
 });
+
+export const closeDatabase = async (): Promise<void> => {
+  await db.end();
+};
